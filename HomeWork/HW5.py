@@ -1,36 +1,30 @@
 import numpy as np
 
-
 def get_polynom(coords):
-    matrix_number = len(coords)
-    print (matrix_number)
-    # a =  np.matrix([A,B, C])
+    n = len(coords)
+    x = [c[0] for c in coords]
+    y = [c[1] for c in coords]
+    a = np.ones((n, n))
 
-    x_list = []
-    y_list = []
-    for item in coords:
-        x_list.append(item[0])
-        y_list.append(item[1])
+    # calc x matrix
+    for i in range(len(x)): # row
+        for j in range(1, len(x)): # colon
 
-    x = np.asarray(x_list)
-    y = np.asarray(y_list)
-    print(x, y)
+            a[i][j] = pow(x[i],j)
 
+    # calc y matrix
+    text_to_b = ''
+    for item in y:
 
-    # Find the coefficients of the quadratic function that fits the points
-    coefficients = np.polyfit(x, y, 1)
+        text_item = f'{item};'
+        text_to_b += text_item
 
-    # Print the coefficients
-    print(coefficients)
+    text_to_b = text_to_b[:-1]
+    b = np.matrix(text_to_b)
 
-
-
-
-
-    # return np.linalg.solve(a, b)
-
+    # calc coeficients
+    return np.linalg.solve(a, b)
 
 if __name__ == '__main__':
-
-    coords =  [(1, 2), (4,6)]
-    get_polynom(coords)
+    coords =  [(-1, 2), (0, 3), (3, 4), (5, 0)]
+    print(get_polynom(coords))
